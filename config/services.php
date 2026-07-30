@@ -35,4 +35,14 @@ return [
         ],
     ],
 
+    'github' => [
+        'token' => env('GITHUB_TOKEN'),
+    ],
+
+    'anthropic' => [
+        // Product deployments set an API key (BYOK) so the CLI runs headless.
+        // Left blank in local dev, where the `claude` CLI's own login is used.
+        'api_key' => env('ANTHROPIC_API_KEY'),
+    ],
+
 ];

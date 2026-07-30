@@ -12,6 +12,10 @@ parameters:
 
     level: 7
 
+    # The app/Enums ignore below is future-proofing for Filament enums; don't
+    # fail the run while no such enum exists yet.
+    reportUnmatchedIgnoredErrors: false
+
     ignoreErrors:
         # Filament enums must declare the exact HasColor/HasIcon interface return
         # types (string|array|null, string|BackedEnum|Htmlable|null) per the
