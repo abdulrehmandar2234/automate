@@ -1,0 +1,11 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "/Users/abdulrehmandar/Library/Application Support/Herd/bin/php84",
+            "args": [
+                "/Users/abdulrehmandar/Desktop/automate/artisan",
+                "boost:mcp"
+            ]
+        }
+    }
+}

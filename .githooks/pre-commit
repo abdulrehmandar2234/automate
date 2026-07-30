@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# Pre-commit hook: refactor (Rector) + format (Pint) staged PHP, then
+# type-check (Larastan). Tracked in the repo and enabled via `core.hooksPath`
+# (see composer "setup" script, or run: git config core.hooksPath .githooks).
+#
+set -e
+
+# Laravel Herd installs PHP outside the default non-interactive PATH.
+if ! command -v php >/dev/null 2>&1; then
+    export PATH="$HOME/Library/Application Support/Herd/bin:$PATH"
+fi
+
+# 1. Refactor (safe, behavior-preserving rules — see rector.php) and format
+#    staged PHP files, then re-stage anything that changed.
+files=$(git -c core.quotepath=false diff --cached --name-only --diff-filter=ACM -- '*.php' | grep -v '\.blade\.php$' || true)
+if [ -n "$files" ]; then
+    # shellcheck disable=SC2086
+    php vendor/bin/rector process $files --no-diffs
+    # shellcheck disable=SC2086
+    php vendor/bin/pint $files
+    # shellcheck disable=SC2086
+    git add $files
+fi
+
+# 2. Static analysis across the project (Larastan / PHPStan).
+php -d memory_limit=1G vendor/bin/phpstan analyse --no-progress

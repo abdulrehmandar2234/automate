@@ -1,0 +1,22 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+    - vendor/nesbot/carbon/extension.neon
+
+parameters:
+    paths:
+        - app/
+        - bootstrap/app.php
+        - config/
+        - database/
+        - routes/
+
+    level: 7
+
+    ignoreErrors:
+        # Filament enums must declare the exact HasColor/HasIcon interface return
+        # types (string|array|null, string|BackedEnum|Htmlable|null) per the
+        # project convention in CLAUDE.md, even though each enum only returns a
+        # subset — so PHPStan's "unused union member" check is moot here.
+        -
+            identifier: return.unusedType
+            path: app/Enums/*

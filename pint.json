@@ -1,0 +1,9 @@
+{
+    "preset": "laravel",
+    "exclude": [
+        "resources/views"
+    ],
+    "notName": [
+        "*.blade.php"
+    ]
+}
